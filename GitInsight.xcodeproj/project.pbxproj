@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		179A55D52F7A9E32006820B6 /* GitInsight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitInsight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		179A55D52F7A9E32006820B6 /* GitInsight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GitInsight.app; path = "/Users/ninikurshavishvili/Desktop/GitInsight/build/Debug-iphoneos/GitInsight.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,16 +33,7 @@
 			isa = PBXGroup;
 			children = (
 				179A55D72F7A9E32006820B6 /* GitInsight */,
-				179A55D62F7A9E32006820B6 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		179A55D62F7A9E32006820B6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				179A55D52F7A9E32006820B6 /* GitInsight.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,7 +86,7 @@
 			mainGroup = 179A55CC2F7A9E32006820B6;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 179A55D62F7A9E32006820B6 /* Products */;
+			productRefGroup = 179A55CC2F7A9E32006820B6;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
