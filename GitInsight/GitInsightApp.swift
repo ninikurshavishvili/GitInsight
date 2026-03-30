@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct GitInsightApp: App {
-
     @StateObject private var authService = AuthService()
 
     var body: some Scene {
