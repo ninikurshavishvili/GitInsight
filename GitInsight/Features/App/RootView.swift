@@ -5,19 +5,16 @@
 
 import SwiftUI
 
-/// The application's root router.
-/// Observes `AuthService` and presents `LoginView` or `ProfileView`
-/// depending on whether a current user is loaded.
-struct RootView: View {
 
+struct RootView: View {
     @EnvironmentObject private var authService: AuthService
 
     var body: some View {
         Group {
             if authService.currentUser != nil {
-                ProfileView(authService: authService)
+                ProfileView(authService: AuthService())
             } else {
-                LoginView(authService: _authService)
+                LoginView()
             }
         }
         .task {

@@ -27,7 +27,7 @@ struct LoginView: View {
                 DecorativeBarsView()
 
                 GitHubLoginButton {
-                    authService.startGitHubLogin()
+                    authService.signInWithGitHub()
                 }
 
                 DisclaimerView()
