@@ -7,12 +7,25 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		179A55D52F7A9E32006820B6 /* GitInsight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GitInsight.app; path = "/Users/ninikurshavishvili/Desktop/GitInsight/build/Debug-iphoneos/GitInsight.app"; sourceTree = "<absolute>"; };
+		179A55EC2F7ABFA8006820B6 /* GitInsight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitInsight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		179A55EE2F7ABFA8006820B6 /* Exceptions for "GitInsight" folder in "GitInsight" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 179A55D42F7A9E32006820B6 /* GitInsight */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		179A55D72F7A9E32006820B6 /* GitInsight */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				179A55EE2F7ABFA8006820B6 /* Exceptions for "GitInsight" folder in "GitInsight" target */,
+			);
 			path = GitInsight;
 			sourceTree = "<group>";
 		};
@@ -33,6 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				179A55D72F7A9E32006820B6 /* GitInsight */,
+				179A55EC2F7ABFA8006820B6 /* GitInsight.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,7 +72,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitInsight;
-			productReference = 179A55D52F7A9E32006820B6 /* GitInsight.app */;
+			productReference = 179A55EC2F7ABFA8006820B6 /* GitInsight.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -247,6 +261,7 @@
 				DEVELOPMENT_TEAM = BWM868S4PF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GitInsight/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -279,6 +294,7 @@
 				DEVELOPMENT_TEAM = BWM868S4PF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GitInsight/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
