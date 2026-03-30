@@ -17,7 +17,7 @@ struct RootView: View {
             if authService.currentUser != nil {
                 ProfileView(authService: authService)
             } else {
-                LoginView(authService: authService)
+                LoginView(authService: _authService)
             }
         }
         .task {
