@@ -20,7 +20,7 @@ struct LoginView: View {
 
             Image(systemName: "chevron.left.forwardslash.chevron.right")
                 .font(.system(size: 60))
-                .foregroundStyle(.accent)
+                .foregroundStyle(Color.accentColor)
 
             Text("GitInsight")
                 .font(.largeTitle)
