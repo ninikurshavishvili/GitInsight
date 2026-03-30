@@ -7,18 +7,17 @@
 
 import SwiftUI
 
+/// Legacy entry-point kept for compatibility; the app now launches `RootView` directly.
 struct ContentView: View {
+    @EnvironmentObject private var authService: AuthService
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        RootView()
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AuthService())
 }
+
