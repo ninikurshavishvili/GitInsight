@@ -80,7 +80,6 @@ final class AuthService: NSObject, ObservableObject {
         ) { [weak self] callbackURL, error in
             guard let self else { return }
             Task { @MainActor in
-                guard let self else { return }
                 self.isLoading = false
 
                 if let error {
