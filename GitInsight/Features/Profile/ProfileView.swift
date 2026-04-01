@@ -30,7 +30,7 @@ struct ProfileView: View {
                 // Scrollable content
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 16) {
-                        // Profile header — use live user when available, else mock
+                        // Profile header — use live user when available, else placeholder
                         ProfileHeaderView(user: viewModel.user ?? placeholderUser)
 
                         // Cards group
@@ -55,6 +55,17 @@ struct ProfileView: View {
 
                         // Extra padding so last card clears the tab bar
                         Color.clear.frame(height: 88)
+                    }
+                }
+                // Dim content behind a spinner while loading
+                .overlay {
+                    if viewModel.isLoading {
+                        ZStack {
+                            Color.black.opacity(0.35).ignoresSafeArea()
+                            ProgressView()
+                                .tint(AppTheme.Colors.accent)
+                                .scaleEffect(1.4)
+                        }
                     }
                 }
             }

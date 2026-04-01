@@ -15,12 +15,14 @@ struct ContributionHeatmapView: View {
     /// 2-D array `[week 0…51][day 0…6]` with intensity 0 (none) … 4 (heavy).
     let data: [[Int]]
 
-    private let cellSize: CGFloat = 10
-    private let gap:      CGFloat = 3
+    private let cellSize:   CGFloat = 10
+    private let gap:        CGFloat = 3
+    private let weekCount:  Int     = 52
+    private let dayCount:   Int     = 7
 
-    // Total grid width: 52 cells + 51 gaps between them
+    // Total grid width: weekCount cells + (weekCount − 1) gaps
     private var gridWidth: CGFloat {
-        CGFloat(52) * cellSize + CGFloat(51) * gap
+        CGFloat(weekCount) * cellSize + CGFloat(weekCount - 1) * gap
     }
 
     var body: some View {
@@ -30,16 +32,16 @@ struct ContributionHeatmapView: View {
                 .foregroundStyle(AppTheme.Colors.textPrimary)
 
             ScrollView(.horizontal, showsIndicators: false) {
-                // 52 fixed columns; 7 × 52 = 364 cells fill 7 rows automatically.
+                // 52 fixed columns; dayCount × weekCount cells fill dayCount rows automatically.
                 LazyVGrid(
-                    columns: Array(repeating: GridItem(.fixed(cellSize), spacing: gap), count: 52),
+                    columns: Array(repeating: GridItem(.fixed(cellSize), spacing: gap), count: weekCount),
                     alignment: .leading,
                     spacing: gap
                 ) {
                     // Iterate day-major so that all 52 cells of day 0 fill row 0, etc.
-                    ForEach(0..<(7 * 52), id: \.self) { index in
-                        let day  = index / 52
-                        let week = index % 52
+                    ForEach(0..<(dayCount * weekCount), id: \.self) { index in
+                        let day  = index / weekCount
+                        let week = index % weekCount
                         let level = levelAt(week: week, day: day)
 
                         RoundedRectangle(cornerRadius: 2)
