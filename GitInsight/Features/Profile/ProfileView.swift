@@ -5,94 +5,97 @@
 
 import SwiftUI
 
-/// Displays the authenticated user's avatar, username, full name,
-/// public repository count, and follower count, with a sign-out button.
+/// Full-screen profile experience: top bar, scrollable stats, heatmap,
+/// language breakdown, architecture pulse, and bottom navigation.
 struct ProfileView: View {
 
     @StateObject private var viewModel: ProfileViewModel
+    @State private var selectedTab: BottomNavigationBar.Tab = .profile
 
     init(authService: AuthService) {
         _viewModel = StateObject(wrappedValue: ProfileViewModel(authService: authService))
     }
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if let user = viewModel.user {
-                    userContent(user)
-                } else if viewModel.isLoading {
-                    ProgressView("Loading profile…")
-                } else {
-                    Text(viewModel.errorMessage ?? "Unable to load profile.")
-                        .foregroundStyle(.secondary)
+        ZStack(alignment: .bottom) {
+            AppTheme.Colors.background.ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                // Top App Bar
+                TopAppBar(
+                    avatarURL: viewModel.user?.avatar_url,
+                    onSettingsTap: {}
+                )
+
+                // Scrollable content
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        // Profile header — use live user when available, else placeholder
+                        ProfileHeaderView(user: viewModel.user ?? placeholderUser)
+
+                        // Cards group
+                        ContributionHeatmapView(data: viewModel.heatmapData)
+                            .padding(.horizontal, 16)
+
+                        QuickStatsView(
+                            totalCommits: viewModel.repositoryStats.totalCommits,
+                            totalRepos:   viewModel.repositoryStats.totalRepos
+                        )
+                        .padding(.horizontal, 16)
+
+                        LanguagesCardView(stats: viewModel.languageStats)
+                            .padding(.horizontal, 16)
+
+                        ArchitecturePulseView(
+                            score:           viewModel.repositoryStats.architectureScore,
+                            grade:           viewModel.repositoryStats.architectureGrade,
+                            sparklinePoints: viewModel.repositoryStats.sparklinePoints
+                        )
+                        .padding(.horizontal, 16)
+
+                        // Extra padding so last card clears the tab bar
+                        Color.clear.frame(height: 88)
+                    }
+                }
+                // Dim content behind a spinner while loading
+                .overlay {
+                    if viewModel.isLoading {
+                        ZStack {
+                            Color.black.opacity(0.35).ignoresSafeArea()
+                            ProgressView()
+                                .tint(AppTheme.Colors.accent)
+                                .scaleEffect(1.4)
+                        }
+                    }
                 }
             }
-            .navigationTitle("Profile")
-            .task {
-                await viewModel.loadUser()
-            }
+
+            // Bottom Navigation Bar (overlaid at the bottom)
+            BottomNavigationBar(selectedTab: $selectedTab)
+        }
+        .task {
+            await viewModel.loadUser()
         }
     }
 
-    // MARK: - Private views
+    // MARK: - Placeholder
 
-    @ViewBuilder
-    private func userContent(_ user: GitHubUser) -> some View {
-        VStack(spacing: 20) {
-            AsyncImage(url: user.avatar_url) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .scaledToFill()
-                default:
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .frame(width: 120, height: 120)
-            .clipShape(Circle())
-            .shadow(radius: 4)
-
-            VStack(spacing: 4) {
-                Text(user.login)
-                    .font(.title2)
-                    .bold()
-
-                if let name = user.name, !name.isEmpty {
-                    Text(name)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
-            HStack(spacing: 40) {
-                statView(title: "Repos", value: user.public_repos)
-                statView(title: "Followers", value: user.followers)
-            }
-            .padding(.top, 8)
-
-            Spacer()
-
-            Button("Sign Out", role: .destructive) {
-                viewModel.signOut()
-            }
-            .buttonStyle(.bordered)
-        }
-        .padding()
-    }
-
-    private func statView(title: String, value: Int) -> some View {
-        VStack(spacing: 2) {
-            Text("\(value)")
-                .font(.title3)
-                .bold()
-            Text(title)
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
+    /// Placeholder user shown before sign-in or while loading.
+    private var placeholderUser: GitHubUser {
+        GitHubUser(
+            id: 0,
+            login: "gitinsight_user",
+            name: "GitInsight User",
+            avatar_url: nil,
+            bio: "Building great software, one commit at a time.",
+            public_repos: 0,
+            followers: 0,
+            following: 0
+        )
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     ProfileView(authService: AuthService())
