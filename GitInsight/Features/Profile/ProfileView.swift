@@ -12,69 +12,83 @@ struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
     @State private var selectedTab: BottomNavigationBar.Tab = .profile
 
+    // Keep a reference to the same AuthService instance passed in so we can
+    // forward it to child screens like SettingsView.
+    private let authService: AuthService
+
+    // Controls navigation to the Settings screen.
+    @State private var showSettings = false
+
     init(authService: AuthService) {
+        self.authService = authService
         _viewModel = StateObject(wrappedValue: ProfileViewModel(authService: authService))
     }
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            AppTheme.Colors.background.ignoresSafeArea()
+        NavigationStack {
+            ZStack(alignment: .bottom) {
+                AppTheme.Colors.background.ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                // Top App Bar
-                TopAppBar(
-                    avatarURL: viewModel.user?.avatar_url,
-                    onSettingsTap: {}
-                )
+                VStack(spacing: 0) {
+                    // Top App Bar
+                    TopAppBar(
+                        avatarURL: viewModel.user?.avatar_url,
+                        onSettingsTap: { showSettings = true }
+                    )
 
-                // Scrollable content
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 16) {
-                        // Profile header — use live user when available, else placeholder
-                        ProfileHeaderView(user: viewModel.user ?? placeholderUser)
+                    // Scrollable content
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 16) {
+                            // Profile header — use live user when available, else placeholder
+                            ProfileHeaderView(user: viewModel.user ?? placeholderUser)
 
-                        // Cards group
-                        ContributionHeatmapView(data: viewModel.heatmapData)
+                            // Cards group
+                            ContributionHeatmapView(data: viewModel.heatmapData)
+                                .padding(.horizontal, 16)
+
+                            QuickStatsView(
+                                totalCommits: viewModel.repositoryStats.totalCommits,
+                                totalRepos:   viewModel.repositoryStats.totalRepos
+                            )
                             .padding(.horizontal, 16)
 
-                        QuickStatsView(
-                            totalCommits: viewModel.repositoryStats.totalCommits,
-                            totalRepos:   viewModel.repositoryStats.totalRepos
-                        )
-                        .padding(.horizontal, 16)
+                            LanguagesCardView(stats: viewModel.languageStats)
+                                .padding(.horizontal, 16)
 
-                        LanguagesCardView(stats: viewModel.languageStats)
+                            ArchitecturePulseView(
+                                score:           viewModel.repositoryStats.architectureScore,
+                                grade:           viewModel.repositoryStats.architectureGrade,
+                                sparklinePoints: viewModel.repositoryStats.sparklinePoints
+                            )
                             .padding(.horizontal, 16)
 
-                        ArchitecturePulseView(
-                            score:           viewModel.repositoryStats.architectureScore,
-                            grade:           viewModel.repositoryStats.architectureGrade,
-                            sparklinePoints: viewModel.repositoryStats.sparklinePoints
-                        )
-                        .padding(.horizontal, 16)
-
-                        // Extra padding so last card clears the tab bar
-                        Color.clear.frame(height: 88)
+                            // Extra padding so last card clears the tab bar
+                            Color.clear.frame(height: 88)
+                        }
                     }
-                }
-                // Dim content behind a spinner while loading
-                .overlay {
-                    if viewModel.isLoading {
-                        ZStack {
-                            Color.black.opacity(0.35).ignoresSafeArea()
-                            ProgressView()
-                                .tint(AppTheme.Colors.accent)
-                                .scaleEffect(1.4)
+                    // Dim content behind a spinner while loading
+                    .overlay {
+                        if viewModel.isLoading {
+                            ZStack {
+                                Color.black.opacity(0.35).ignoresSafeArea()
+                                ProgressView()
+                                    .tint(AppTheme.Colors.accent)
+                                    .scaleEffect(1.4)
+                            }
                         }
                     }
                 }
-            }
 
-            // Bottom Navigation Bar (overlaid at the bottom)
-            BottomNavigationBar(selectedTab: $selectedTab)
-        }
-        .task {
-            await viewModel.loadUser()
+                // Bottom Navigation Bar (overlaid at the bottom)
+                BottomNavigationBar(selectedTab: $selectedTab)
+            }
+            // Use the modern navigationDestination to present SettingsView when requested.
+            .navigationDestination(isPresented: $showSettings) {
+                SettingsView(authService: authService)
+            }
+            .task {
+                await viewModel.loadUser()
+            }
         }
     }
 
