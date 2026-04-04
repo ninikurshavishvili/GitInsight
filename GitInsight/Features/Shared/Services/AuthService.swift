@@ -12,12 +12,15 @@ final class AuthService: NSObject, ObservableObject {
     @Published private(set) var isLoading = false
     @Published var errorMessage: String?
 
+    // Public boolean the app root can observe for routing
+    @Published var isAuthenticated: Bool = false
+
     // MARK: - OAuth configuration
     private let clientId = GitHubAuthConfig.clientID
 
     /// ⚠️ For production: do NOT embed secrets in the app.
     /// Keep this only for local debugging / prototype.
-    private let clientSecret = "fakeee48ebef294664ed8a3a28981f1b"
+    private let clientSecret = ""
 
     private let redirectScheme = GitHubAuthConfig.callbackURLScheme   // "gitinsight"
     private let redirectURI = GitHubAuthConfig.redirectURI            // "gitinsight://oauth-callback"
@@ -29,6 +32,8 @@ final class AuthService: NSObject, ObservableObject {
     override init() {
         super.init()
         accessToken = try? KeychainService.read(account: tokenKeychainAccount)
+        // Do not assume authenticated until we successfully load the user
+        isAuthenticated = false
     }
 
     // MARK: - Public API (DO NOT remove — UI depends on these names)
@@ -52,6 +57,8 @@ final class AuthService: NSObject, ObservableObject {
         accessToken  = nil
         currentUser  = nil
         errorMessage = nil
+        // Update published auth flag so the root UI can react immediately
+        isAuthenticated = false
     }
 
     /// Silently loads the user profile using a persisted token (called on app launch).
@@ -63,6 +70,8 @@ final class AuthService: NSObject, ObservableObject {
 
         do {
             currentUser = try await GitHubAPIService.fetchAuthenticatedUser(accessToken: token)
+            // If we could fetch the user, we're authenticated
+            isAuthenticated = currentUser != nil
         } catch {
             signOut()
         }
@@ -142,6 +151,8 @@ final class AuthService: NSObject, ObservableObject {
                 try KeychainService.save(token, account: self.tokenKeychainAccount)
                 self.accessToken = token
                 self.currentUser = try await GitHubAPIService.fetchAuthenticatedUser(accessToken: token)
+                // Auth succeeded — publish authenticated state
+                self.isAuthenticated = self.currentUser != nil
             } catch {
                 self.errorMessage = error.localizedDescription
             }

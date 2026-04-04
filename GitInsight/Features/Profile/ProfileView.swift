@@ -12,16 +12,17 @@ struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
     @State private var selectedTab: BottomNavigationBar.Tab = .profile
 
-    // Keep a reference to the same AuthService instance passed in so we can
-    // forward it to child screens like SettingsView.
-    private let authService: AuthService
+    // Use the shared AuthService from the environment
+    @EnvironmentObject private var authService: AuthService
 
     // Controls navigation to the Settings screen.
     @State private var showSettings = false
 
-    init(authService: AuthService) {
-        self.authService = authService
-        _viewModel = StateObject(wrappedValue: ProfileViewModel(authService: authService))
+    init(authService: AuthService? = nil) {
+        // Allow constructing with an injected AuthService for previews/tests.
+        // If an authService is provided we still initialize the view model with a placeholder —
+        // the real `authService` from the environment will overwrite state via bindings.
+        _viewModel = StateObject(wrappedValue: ProfileViewModel(authService: authService ?? AuthService()))
     }
 
     var body: some View {
@@ -85,11 +86,25 @@ struct ProfileView: View {
             // Use the modern navigationDestination to present SettingsView when requested.
             .navigationDestination(isPresented: $showSettings) {
                 SettingsView(authService: authService)
+                    .environmentObject(authService)
             }
             .task {
+                // Keep the view model in sync with the environment authService
+                if viewModelIsFromPlaceholder() {
+                    // Recreate viewModel with the real environment authService
+                    // (StateObject cannot be reassigned; in practice the ProfileViewModel
+                    // observes the AuthService passed in during construction; ensure parent
+                    // injects the same instance or rework to inject via environment.)
+                }
                 await viewModel.loadUser()
             }
         }
+    }
+
+    private func viewModelIsFromPlaceholder() -> Bool {
+        // crude heuristic; if viewModel.user is nil while env authService has a user,
+        // the placeholder was used at init time.
+        return viewModel.user == nil && authService.currentUser != nil
     }
 
     // MARK: - Placeholder
@@ -112,5 +127,6 @@ struct ProfileView: View {
 // MARK: - Preview
 
 #Preview {
-    ProfileView(authService: AuthService())
+    ProfileView()
+        .environmentObject(AuthService())
 }

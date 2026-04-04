@@ -11,8 +11,8 @@ struct RootView: View {
 
     var body: some View {
         Group {
-            if authService.currentUser != nil {
-                ProfileView(authService: AuthService())
+            if authService.isAuthenticated {
+                ProfileView(authService: authService)
             } else {
                 LoginView()
             }
