@@ -18,8 +18,7 @@ final class AuthService: NSObject, ObservableObject {
     // MARK: - OAuth configuration
     private let clientId = GitHubAuthConfig.clientID
 
-    /// ⚠️ For production: do NOT embed secrets in the app.
-    /// Keep this only for local debugging / prototype.
+
     private let clientSecret = ""
 
     private let redirectScheme = GitHubAuthConfig.callbackURLScheme   // "gitinsight"
