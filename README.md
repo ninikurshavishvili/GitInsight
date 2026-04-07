@@ -24,6 +24,8 @@ GitInsight is an entry-level application designed to provide insights into Git r
 - User activity tracking
 - Repository comparison tools
 
+
+
 ## Getting Started
 To run the app:
 1. Ensure all dependencies are installed.
