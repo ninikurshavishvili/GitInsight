@@ -4,6 +4,7 @@
 GitInsight is an entry-level application designed to provide insights into Git repositories, helping users understand their projects better.
 
 
+
 ## Screenshots
 <p>
   <img src="GitInsight/AppScreens/IMG_9312.PNG" width="200" alt="Login Page" style="margin-right:20px;">
