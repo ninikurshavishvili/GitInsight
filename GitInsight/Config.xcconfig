@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  GitInsight
+//
+//  Created by Nini Kurshavishvili on 06.04.26.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+GITHUB_CLIENT_SECRET = bc8de6d573bb7687358bc10e0875010f82fa089a

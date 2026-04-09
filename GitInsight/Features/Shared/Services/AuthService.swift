@@ -17,10 +17,9 @@ final class AuthService: NSObject, ObservableObject {
 
     // MARK: - OAuth configuration
     private let clientId = GitHubAuthConfig.clientID
-
-
-    private let clientSecret = ""
-
+    private var clientSecret: String? {
+        Bundle.main.object(forInfoDictionaryKey: "GITHUB_CLIENT_SECRET") as? String
+    }
     private let redirectScheme = GitHubAuthConfig.callbackURLScheme   // "gitinsight"
     private let redirectURI = GitHubAuthConfig.redirectURI            // "gitinsight://oauth-callback"
     private let scope = GitHubAuthConfig.scope                        // "read:user"
@@ -162,6 +161,14 @@ final class AuthService: NSObject, ObservableObject {
     // MARK: - Token exchange
 
     private func exchangeCodeForToken(code: String) async throws -> String {
+        guard let clientSecret, !clientSecret.isEmpty else {
+            throw NSError(
+                domain: "AuthService",
+                code: 1001,
+                userInfo: [NSLocalizedDescriptionKey: "Missing GitHub client secret configuration."]
+            )
+        }
+
         var request = URLRequest(url: URL(string: "https://github.com/login/oauth/access_token")!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
