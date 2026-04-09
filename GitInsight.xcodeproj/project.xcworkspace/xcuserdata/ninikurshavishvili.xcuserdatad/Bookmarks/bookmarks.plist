@@ -12,13 +12,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>206</string>
+					<string>199</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>206</string>
+					<string>199</string>
 					<key>Timestamp</key>
-					<string>797189635.429688</string>
+					<string>797071812.576762</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -53,13 +53,13 @@
 					<key>EndingColumnNumber</key>
 					<string>0</string>
 					<key>EndingLineNumber</key>
-					<string>206</string>
+					<string>22</string>
 					<key>StartingColumnNumber</key>
 					<string>0</string>
 					<key>StartingLineNumber</key>
-					<string>206</string>
+					<string>21</string>
 					<key>Timestamp</key>
-					<string>797189635.429706</string>
+					<string>797071812.576781</string>
 				</dict>
 				<key>rebasable-url</key>
 				<dict>
@@ -75,13 +75,17 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string></string>
+				<string>    private let clientSecret = ""
+</string>
 				<key>leading</key>
-				<string>    }
-}
+				<string>
+
 </string>
 				<key>trailing</key>
-				<string></string>
+				<string>
+    private let redirectScheme = GitHubAuthConfig.callbackURLScheme   // "gitinsight"
+    private let redirectURI = GitHubAuthConfig.redirectURI            // "gitinsight://oauth-callback"
+</string>
 			</dict>
 			<key>type</key>
 			<string>bookmark</string>
