@@ -20,6 +20,7 @@ GitInsight is an entry-level application designed to provide insights into Git r
 ## GitHub Authentication
 ### 2) Add credentials to `Config.xcconfig`
 
+
 Create your own `Config.xcconfig` in the project and add:
 
 ```xcconfig
