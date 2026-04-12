@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		179A55EC2F7ABFA8006820B6 /* GitInsight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitInsight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		171BBC842F8BAAC100B1827D /* GitInsight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitInsight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,7 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				179A55D72F7A9E32006820B6 /* GitInsight */,
-				179A55EC2F7ABFA8006820B6 /* GitInsight.app */,
+				171BBC842F8BAAC100B1827D /* GitInsight.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,7 +72,7 @@
 			packageProductDependencies = (
 			);
 			productName = GitInsight;
-			productReference = 179A55EC2F7ABFA8006820B6 /* GitInsight.app */;
+			productReference = 171BBC842F8BAAC100B1827D /* GitInsight.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
