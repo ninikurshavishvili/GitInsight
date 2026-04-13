@@ -54,6 +54,7 @@ GITHUB_CLIENT_SECRET = YOUR_CLIENT_SECRET
 
 
 
+
 ## Getting Started
 To run the app:
 1. Ensure all dependencies are installed.
