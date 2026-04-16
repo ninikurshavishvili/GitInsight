@@ -250,15 +250,3 @@ private struct GitHubMark: View {
     }
 }
 
-// MARK: - Colors & Helpers
-// Color(hex:) is provided by AppTheme.swift (module-wide).
-
-extension Color {
-    static let accentGreen    = Color(hex: 0x7BDB80)   // #7bdb80
-    static let accentGreen2   = Color(hex: 0x238636)   // GitHub-ish darker green
-    static let secondaryBlue  = Color(hex: 0xAFC6FF)
-    static let surfaceLow     = Color(hex: 0x181C22)   // surface-container-low-ish
-    static let textMuted      = Color(hex: 0xBECABA)   // on-surface-variant-ish
-    static let outlineVariant = Color(hex: 0x3F4A3D)
-    static let onPrimary      = Color(hex: 0x00390E)   // from tailwind config on-primary
-}
