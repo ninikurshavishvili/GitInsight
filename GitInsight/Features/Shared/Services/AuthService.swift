@@ -161,14 +161,6 @@ final class AuthService: NSObject, ObservableObject {
     // MARK: - Token exchange
 
     private func exchangeCodeForToken(code: String) async throws -> String {
-        guard let clientSecret, !clientSecret.isEmpty else {
-            throw NSError(
-                domain: "AuthService",
-                code: 1001,
-                userInfo: [NSLocalizedDescriptionKey: "Missing GitHub client secret configuration."]
-            )
-        }
-
         var request = URLRequest(url: URL(string: "https://github.com/login/oauth/access_token")!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
