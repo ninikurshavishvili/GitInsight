@@ -239,14 +239,5 @@ private struct FooterView: View {
     }
 }
 
-// MARK: - GitHub Mark (simple)
 
-private struct GitHubMark: View {
-    var body: some View {
-        // Simple SF Symbol fallback. (No WebKit; no SVG parsing.)
-        // If you later add an asset named "github-mark", swap to Image("github-mark").
-        Image(systemName: "circle.hexagongrid.fill")
-            .font(.system(size: 20, weight: .semibold))
-    }
-}
 
