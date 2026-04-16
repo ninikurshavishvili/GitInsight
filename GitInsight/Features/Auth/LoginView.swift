@@ -51,26 +51,7 @@ struct LoginView: View {
     }
 }
 
-// MARK: - Background
 
-private struct DecorativeBackground: View {
-    var body: some View {
-        ZStack {
-            Circle()
-                .fill(Color.accentGreen.opacity(0.08))
-                .frame(width: 420, height: 420)
-                .blur(radius: 90)
-                .offset(x: -140, y: -240)
-
-            Circle()
-                .fill(Color.secondaryBlue.opacity(0.07))
-                .frame(width: 340, height: 340)
-                .blur(radius: 80)
-                .offset(x: 160, y: 280)
-        }
-        .allowsHitTesting(false)
-    }
-}
 
 // MARK: - Logo
 
@@ -214,70 +195,8 @@ struct DisclaimerView: View {
     }
 }
 
-struct SecurityBadgeRow: View {
-    var body: some View {
-        HStack(spacing: 12) {
-            Badge(icon: "lock.fill", text: "Secure")
 
-            Circle()
-                .fill(Color.outlineVariant)
-                .frame(width: 4, height: 4)
 
-            Badge(icon: "checkmark.shield.fill", text: "Read-only")
-        }
-        .font(.system(size: 12, weight: .medium))
-        .foregroundStyle(Color.textMuted.opacity(0.7))
-        .padding(.top, 6)
-    }
 
-    private struct Badge: View {
-        let icon: String
-        let text: String
 
-        var body: some View {
-            HStack(spacing: 6) {
-                Image(systemName: icon)
-                    .font(.system(size: 12, weight: .semibold))
-                Text(text)
-            }
-        }
-    }
-}
 
-// MARK: - Footer
-
-private struct FooterView: View {
-    var body: some View {
-        Text("Built for developers by developers")
-            .font(.system(size: 10, weight: .medium))
-            .textCase(.uppercase)
-            .tracking(1.6)
-            .foregroundStyle(Color.textMuted.opacity(0.35))
-            .frame(maxWidth: .infinity, alignment: .center)
-            .accessibilityLabel("Built for developers by developers")
-    }
-}
-
-// MARK: - GitHub Mark (simple)
-
-private struct GitHubMark: View {
-    var body: some View {
-        // Simple SF Symbol fallback. (No WebKit; no SVG parsing.)
-        // If you later add an asset named "github-mark", swap to Image("github-mark").
-        Image(systemName: "circle.hexagongrid.fill")
-            .font(.system(size: 20, weight: .semibold))
-    }
-}
-
-// MARK: - Colors & Helpers
-// Color(hex:) is provided by AppTheme.swift (module-wide).
-
-private extension Color {
-    static let accentGreen    = Color(hex: 0x7BDB80)   // #7bdb80
-    static let accentGreen2   = Color(hex: 0x238636)   // GitHub-ish darker green
-    static let secondaryBlue  = Color(hex: 0xAFC6FF)
-    static let surfaceLow     = Color(hex: 0x181C22)   // surface-container-low-ish
-    static let textMuted      = Color(hex: 0xBECABA)   // on-surface-variant-ish
-    static let outlineVariant = Color(hex: 0x3F4A3D)
-    static let onPrimary      = Color(hex: 0x00390E)   // from tailwind config on-primary
-}
