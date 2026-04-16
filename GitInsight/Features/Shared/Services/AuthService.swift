@@ -17,9 +17,10 @@ final class AuthService: NSObject, ObservableObject {
 
     // MARK: - OAuth configuration
     private let clientId = GitHubAuthConfig.clientID
-    private var clientSecret: String? {
-        Bundle.main.object(forInfoDictionaryKey: "GITHUB_CLIENT_SECRET") as? String
-    }
+
+
+    private let clientSecret = ""
+
     private let redirectScheme = GitHubAuthConfig.callbackURLScheme   // "gitinsight"
     private let redirectURI = GitHubAuthConfig.redirectURI            // "gitinsight://oauth-callback"
     private let scope = GitHubAuthConfig.scope                        // "read:user"

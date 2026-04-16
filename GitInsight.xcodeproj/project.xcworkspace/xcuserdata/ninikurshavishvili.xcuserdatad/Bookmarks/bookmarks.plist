@@ -75,13 +75,17 @@
 			<key>text-context</key>
 			<dict>
 				<key>focused</key>
-				<string></string>
+				<string>    private let clientSecret = ""
+</string>
 				<key>leading</key>
-				<string>    }
-}
+				<string>
+
 </string>
 				<key>trailing</key>
-				<string></string>
+				<string>
+    private let redirectScheme = GitHubAuthConfig.callbackURLScheme   // "gitinsight"
+    private let redirectURI = GitHubAuthConfig.redirectURI            // "gitinsight://oauth-callback"
+</string>
 			</dict>
 			<key>type</key>
 			<string>bookmark</string>
