@@ -93,46 +93,9 @@ struct LogoClusterView: View {
     }
 }
 
-// MARK: - Title
 
-private struct TitleBlockView: View {
-    var body: some View {
-        VStack(spacing: 10) {
-            Text("GitInsight")
-                .font(.system(size: 40, weight: .heavy, design: .rounded))
-                .tracking(-1.0)
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [Color.accentGreen, Color.accentGreen2],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
 
-            Text("Track and analyze your GitHub activity")
-                .font(.system(size: 17, weight: .regular))
-                .foregroundStyle(Color.textMuted)
-                .multilineTextAlignment(.center)
-                .lineSpacing(2)
-                .frame(maxWidth: 300)
-        }
-    }
-}
 
-// MARK: - Decorative Bars
-
-private struct DecorativeBarsView: View {
-    var body: some View {
-        HStack(spacing: 8) {
-            Capsule().fill(Color.accentGreen.opacity(0.20)).frame(width: 34, height: 8)
-            Capsule().fill(Color.accentGreen.opacity(0.40)).frame(width: 46, height: 8)
-            Capsule().fill(Color.accentGreen.opacity(0.12)).frame(width: 26, height: 8)
-            Capsule().fill(Color.accentGreen.opacity(0.30)).frame(width: 40, height: 8)
-        }
-        .padding(.vertical, 6)
-        .accessibilityHidden(true)
-    }
-}
 
 
 
